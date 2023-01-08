@@ -6,9 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/44e76333c8.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  
+  <section class="game">
+    <section class="game__header">
+      <button class="game__btn">
+        <i class="fa-solid fa-play"></i>
+      </button>
+      <span class="game__timer">0 : 0</span>
+      <span class="game__score">0</span>
+    </section>
+    <section class="game__area"></section>
+  </section>
+  <section class="popUp popUp__hide">
+    <button class="popUp__refresh">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+    <span class="popUp__message">reply?</span>
+  </section>
   <script src="index.js"></script>
 </body>
 </html>
