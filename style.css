@@ -66,13 +66,17 @@ body {
   font-size: 2.5rem;
   font-weight: 600;
   margin: 10px 0;
+  visibility: hidden;
 }
 .game__score {
   font-size: 3rem;
   font-weight: 700;
+  visibility: hidden;
 }
 .game__area {
+  width: 100%;
   height: 100%;
+  position: relative;
 }
 .popUp {
   width: 50%;
@@ -84,6 +88,9 @@ body {
   position: absolute;
   left: 25%;
   top: 50%;
+}
+.popUp__hide {
+  display: none;
 }
 .popUp__refresh {
   margin: 20px 0;
