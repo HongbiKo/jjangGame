@@ -14,10 +14,16 @@ let timer = undefined;
 let score = 0;
 
 const JJANG_SIZE = 80;
-const GAME_DURATION = 15;
+const GAME_DURATION = 10;
 const ITEM_NUMBER = 5;
 const NORMAL1 = 5;
 const NORMAL2 = 5;
+
+const bgSound = new Audio("./sounds/bg.mp3");
+const alertSound = new Audio("./sounds/alert.mp3");
+const normalSound = new Audio("./sounds/normal_pull.mp3");
+const angrySound = new Audio("./sounds/angry_pull.mp3");
+const gameWinSound = new Audio("./sounds/game_win.mp3");
 
 gameBtn.addEventListener("click", function () {
   if (started) {
@@ -32,12 +38,16 @@ gameArea.addEventListener("click", onAreaClick);
 popUpBtn.addEventListener("click", function () {
   hidePopUp();
   startGame();
+  //showGameBtn();
 });
 
 function stopGame() {
   started = false;
   stopTimer();
+  hideStopBtn();
   showPopUp("Reply?");
+  stopSound(bgSound);
+  playSound(alertSound);
 }
 
 function startGame() {
@@ -46,6 +56,7 @@ function startGame() {
   startTimer();
   switchStopBtn();
   showTimerAndScore();
+  playSound(bgSound);
 }
 
 function finishGame(win) {
@@ -53,6 +64,24 @@ function finishGame(win) {
   hideStopBtn();
   stopTimer();
   showPopUp(win ? "YOU WON!" : "YOU LOST");
+  stopSound(bgSound);
+  if (win) {
+    playSound(gameWinSound);
+  } else {
+    playSound(angrySound);
+  }
+}
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+  if (sound == bgSound) {
+    sound.loop = true;
+  }
+}
+
+function stopSound(sound) {
+  sound.pause();
 }
 
 function hidePopUp() {
@@ -70,7 +99,11 @@ function showTimerAndScore() {
 }
 
 function hideStopBtn() {
-  gameBtn.visibility = "hidden";
+  gameBtn.style.visibility = "hidden";
+}
+
+function showGameBtn() {
+  gameBtn.style.visibility = "visible";
 }
 
 function switchStopBtn() {
@@ -89,6 +122,7 @@ function startTimer() {
   timer = setInterval(function () {
     if (remainTime <= 0) {
       clearInterval(timer);
+      finishGame(ITEM_NUMBER === score);
       return;
     }
     updateTimer(--remainTime);
@@ -144,6 +178,7 @@ function onAreaClick(e) {
     target.remove();
     score++;
     updateScore();
+    playSound(normalSound);
     if (score === NORMAL1 + NORMAL2) {
       finishGame(true);
     }
@@ -151,6 +186,7 @@ function onAreaClick(e) {
     target.remove();
     score++;
     updateScore();
+    playSound(normalSound);
     if (score === NORMAL1 + NORMAL2) {
       finishGame(true);
     }
