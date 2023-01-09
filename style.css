@@ -61,6 +61,10 @@ body {
   cursor: pointer;
   color: var(--sky-color);
   box-shadow: var(--box-shadow);
+  transition: transform 100ms ease-in;
+}
+.game__btn:hover {
+  transform: scale(1.1);
 }
 .game__timer {
   font-size: 2.5rem;
@@ -108,4 +112,16 @@ body {
   font-weight: 600;
   color: var(--white-color);
   margin-bottom: 20px;
+}
+
+
+.normal1,
+.normal2,
+.angry {
+  transition: transform 100ms ease-in;
+}
+.normal1:hover,
+.normal2:hover,
+.angry:hover {
+  transform: scale(1.1);
 }
