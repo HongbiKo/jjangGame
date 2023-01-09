@@ -14,8 +14,10 @@ let timer = undefined;
 let score = 0;
 
 const JJANG_SIZE = 80;
-const GAME_DURATION = 20;
+const GAME_DURATION = 15;
 const ITEM_NUMBER = 5;
+const NORMAL1 = 5;
+const NORMAL2 = 5;
 
 gameBtn.addEventListener("click", function () {
   if (started) {
@@ -46,6 +48,13 @@ function startGame() {
   showTimerAndScore();
 }
 
+function finishGame(win) {
+  started = false;
+  hideStopBtn();
+  stopTimer();
+  showPopUp(win ? "YOU WON!" : "YOU LOST");
+}
+
 function hidePopUp() {
   popUp.classList.add("popUp__hide");
 }
@@ -58,6 +67,10 @@ function showPopUp(text) {
 function showTimerAndScore() {
   gameTimer.style.visibility = "visible";
   gameScore.style.visibility = "visible";
+}
+
+function hideStopBtn() {
+  gameBtn.visibility = "hidden";
 }
 
 function switchStopBtn() {
@@ -87,9 +100,14 @@ function updateTimer(time) {
   gameTimer.textContent = `${minute} : ${second}`;
 }
 
+function updateScore() {
+  gameScore.textContent = NORMAL1 + NORMAL2 - score;
+}
+
 function gameInit() {
   gameArea.innerHTML = "";
-  gameScore.textContent = 0;
+  gameScore.textContent = NORMAL1 + NORMAL2;
+  score = 0;
   addItem("normal1", ITEM_NUMBER, "./imgs/normal1.png");
   addItem("normal2", ITEM_NUMBER, "./imgs/normal2.png");
   addItem("angry", ITEM_NUMBER, "./imgs/angry.png");
@@ -117,4 +135,26 @@ function NumberRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function onAreaClick(e) {}
+function onAreaClick(e) {
+  if (!started) {
+    return;
+  }
+  const target = e.target;
+  if (target.matches(".normal1")) {
+    target.remove();
+    score++;
+    updateScore();
+    if (score === NORMAL1 + NORMAL2) {
+      finishGame(true);
+    }
+  } else if (target.matches(".normal2")) {
+    target.remove();
+    score++;
+    updateScore();
+    if (score === NORMAL1 + NORMAL2) {
+      finishGame(true);
+    }
+  } else if (target.matches(".angry")) {
+    finishGame(false);
+  }
+}
