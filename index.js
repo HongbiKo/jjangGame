@@ -38,7 +38,7 @@ gameArea.addEventListener("click", onAreaClick);
 popUpBtn.addEventListener("click", function () {
   hidePopUp();
   startGame();
-  //showGameBtn();
+  showGameBtn();
 });
 
 function stopGame() {
