@@ -8,6 +8,7 @@ const popUpMessage = document.querySelector(".popUp__message");
 const popUpBtn = document.querySelector(".popUp__refresh");
 const gameTimer = document.querySelector(".game__timer");
 const gameScore = document.querySelector(".game__score");
+const introPopup = document.querySelector(".introductionPopup");
 
 let started = false;
 let timer = undefined;
@@ -57,6 +58,7 @@ function startGame() {
   switchStopBtn();
   showTimerAndScore();
   playSound(bgSound);
+  hideIntroPopup();
 }
 
 function finishGame(win) {
@@ -82,6 +84,10 @@ function playSound(sound) {
 
 function stopSound(sound) {
   sound.pause();
+}
+
+function hideIntroPopup() {
+  introPopup.classList.add("introductionPopup__hide");
 }
 
 function hidePopUp() {
