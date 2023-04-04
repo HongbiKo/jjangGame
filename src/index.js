@@ -2,6 +2,7 @@
 
 import Popup from "./popup.js";
 import Area from "./area.js";
+import * as sound from "./sound.js";
 
 const gameBtn = document.querySelector(".game__btn");
 
@@ -18,12 +19,6 @@ const GAME_DURATION = 10;
 const ITEM_NUMBER = 5;
 const NORMAL1 = 5;
 const NORMAL2 = 5;
-
-const bgSound = new Audio("./sounds/bg.mp3");
-const alertSound = new Audio("./sounds/alert.mp3");
-const normalSound = new Audio("./sounds/normal_pull.mp3");
-const angrySound = new Audio("./sounds/angry_pull.mp3");
-const gameWinSound = new Audio("./sounds/game_win.mp3");
 
 gameBtn.addEventListener("click", function () {
   if (started) {
@@ -67,8 +62,8 @@ function stopGame() {
   stopTimer();
   hideStopBtn();
   finishBanner.showTxt("Reply?");
-  stopSound(bgSound);
-  playSound(alertSound);
+  sound.playBg();
+  sound.playAlert();
 }
 
 function startGame() {
@@ -77,7 +72,7 @@ function startGame() {
   startTimer();
   switchStopBtn();
   showTimerAndScore();
-  playSound(bgSound);
+  sound.playBg();
   hideIntroPopup();
 }
 
@@ -86,24 +81,12 @@ function finishGame(win) {
   hideStopBtn();
   stopTimer();
   finishBanner.showTxt(win ? "YOU WIN" : "YOU LOST");
-  stopSound(bgSound);
+  sound.stopBg();
   if (win) {
-    playSound(gameWinSound);
+    sound.playWin();
   } else {
-    playSound(angrySound);
+    sound.playAngry();
   }
-}
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-  if (sound == bgSound) {
-    sound.loop = true;
-  }
-}
-
-function stopSound(sound) {
-  sound.pause();
 }
 
 function hideIntroPopup() {

@@ -1,8 +1,8 @@
 "use strict";
 
+import * as sound from "./sound.js";
+
 const JJANG_SIZE = 80;
-const normalSound = new Audio("./sounds/normal_pull.mp3");
-const bgSound = new Audio("./sounds/bg.mp3");
 
 export default class Area {
   constructor(normalCount1, normalCount2, angryCount) {
@@ -61,11 +61,11 @@ export default class Area {
     const target = e.target;
     if (target.matches(".normal1")) {
       target.remove();
-      playSound(normalSound);
+      sound.playNormal();
       this.onItemClick && this.onItemClick("normal1");
     } else if (target.matches(".normal2")) {
       target.remove();
-      playSound(normalSound);
+      sound.playNormal();
       this.onItemClick && this.onItemClick("normal2");
     } else if (target.matches(".angry")) {
       this.onItemClick && this.onItemClick("angry");
@@ -75,12 +75,4 @@ export default class Area {
 
 function numberRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-  if (sound == bgSound) {
-    sound.loop = true;
-  }
 }
