@@ -1,10 +1,10 @@
 "use strict";
 
 import Popup from "./popup.js";
+import Area from "./area.js";
 
 const gameBtn = document.querySelector(".game__btn");
-const gameArea = document.querySelector(".game__area");
-const gameAreaRect = gameArea.getBoundingClientRect();
+
 const gameTimer = document.querySelector(".game__timer");
 const gameScore = document.querySelector(".game__score");
 const introPopup = document.querySelector(".introductionPopup");
@@ -13,7 +13,7 @@ let started = false;
 let timer = undefined;
 let score = 0;
 
-const JJANG_SIZE = 80;
+// const JJANG_SIZE = 80;
 const GAME_DURATION = 10;
 const ITEM_NUMBER = 5;
 const NORMAL1 = 5;
@@ -33,7 +33,29 @@ gameBtn.addEventListener("click", function () {
   }
 });
 
-gameArea.addEventListener("click", onAreaClick);
+const gameArea = new Area(5, 5, 5);
+gameArea.setOnClick(onAreaClick);
+
+function onAreaClick(item) {
+  if (!started) {
+    return;
+  }
+  if (item === "normal1") {
+    score++;
+    updateScore();
+    if (score === NORMAL1 + NORMAL2) {
+      finishGame(true);
+    }
+  } else if (item === "normal2") {
+    score++;
+    updateScore();
+    if (score === NORMAL1 + NORMAL2) {
+      finishGame(true);
+    }
+  } else if (item === "angry") {
+    finishGame(false);
+  }
+}
 
 const finishBanner = new Popup();
 finishBanner.setItemClick(function () {
@@ -51,7 +73,7 @@ function stopGame() {
 
 function startGame() {
   started = true;
-  gameInit();
+  gameArea.init();
   startTimer();
   switchStopBtn();
   showTimerAndScore();
@@ -131,61 +153,4 @@ function updateTimer(time) {
 
 function updateScore() {
   gameScore.textContent = NORMAL1 + NORMAL2 - score;
-}
-
-function gameInit() {
-  gameArea.innerHTML = "";
-  gameScore.textContent = NORMAL1 + NORMAL2;
-  score = 0;
-  addItem("normal1", ITEM_NUMBER, "./imgs/normal1.png");
-  addItem("normal2", ITEM_NUMBER, "./imgs/normal2.png");
-  addItem("angry", ITEM_NUMBER, "./imgs/angry.png");
-}
-
-function addItem(className, count, path) {
-  const x1 = 0;
-  const y1 = 0;
-  const x2 = gameAreaRect.width - JJANG_SIZE;
-  const y2 = gameAreaRect.height - JJANG_SIZE;
-  for (let i = 0; i < count; i++) {
-    const imgs = document.createElement("img");
-    imgs.setAttribute("class", className);
-    imgs.setAttribute("src", path);
-    imgs.style.position = "absolute";
-    const x = NumberRandom(x1, x2);
-    const y = NumberRandom(y1, y2);
-    imgs.style.left = `${x}px`;
-    imgs.style.top = `${y}px`;
-    gameArea.appendChild(imgs);
-  }
-}
-
-function NumberRandom(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function onAreaClick(e) {
-  if (!started) {
-    return;
-  }
-  const target = e.target;
-  if (target.matches(".normal1")) {
-    target.remove();
-    score++;
-    updateScore();
-    playSound(normalSound);
-    if (score === NORMAL1 + NORMAL2) {
-      finishGame(true);
-    }
-  } else if (target.matches(".normal2")) {
-    target.remove();
-    score++;
-    updateScore();
-    playSound(normalSound);
-    if (score === NORMAL1 + NORMAL2) {
-      finishGame(true);
-    }
-  } else if (target.matches(".angry")) {
-    finishGame(false);
-  }
 }
