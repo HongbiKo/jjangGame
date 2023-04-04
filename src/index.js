@@ -1,11 +1,10 @@
 "use strict";
 
+import Popup from "./popup.js";
+
 const gameBtn = document.querySelector(".game__btn");
 const gameArea = document.querySelector(".game__area");
 const gameAreaRect = gameArea.getBoundingClientRect();
-const popUp = document.querySelector(".popUp");
-const popUpMessage = document.querySelector(".popUp__message");
-const popUpBtn = document.querySelector(".popUp__refresh");
 const gameTimer = document.querySelector(".game__timer");
 const gameScore = document.querySelector(".game__score");
 const introPopup = document.querySelector(".introductionPopup");
@@ -36,17 +35,16 @@ gameBtn.addEventListener("click", function () {
 
 gameArea.addEventListener("click", onAreaClick);
 
-popUpBtn.addEventListener("click", function () {
-  hidePopUp();
+const finishBanner = new Popup();
+finishBanner.setItemClick(function () {
   startGame();
   showGameBtn();
 });
-
 function stopGame() {
   started = false;
   stopTimer();
   hideStopBtn();
-  showPopUp("Reply?");
+  finishBanner.showTxt("Reply?");
   stopSound(bgSound);
   playSound(alertSound);
 }
@@ -65,7 +63,7 @@ function finishGame(win) {
   started = false;
   hideStopBtn();
   stopTimer();
-  showPopUp(win ? "YOU WON!" : "YOU LOST");
+  finishBanner.showTxt(win ? "YOU WIN" : "YOU LOST");
   stopSound(bgSound);
   if (win) {
     playSound(gameWinSound);
@@ -88,15 +86,6 @@ function stopSound(sound) {
 
 function hideIntroPopup() {
   introPopup.classList.add("introductionPopup__hide");
-}
-
-function hidePopUp() {
-  popUp.classList.add("popUp__hide");
-}
-
-function showPopUp(text) {
-  popUp.classList.remove("popUp__hide");
-  popUpMessage.textContent = `${text}`;
 }
 
 function showTimerAndScore() {
