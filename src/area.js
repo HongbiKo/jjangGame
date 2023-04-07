@@ -4,7 +4,13 @@ import * as sound from "./sound.js";
 
 const JJANG_SIZE = 80;
 
-export default class Area {
+export const ItemType = Object.freeze({
+  normal1: "normal1",
+  normal2: "normal2",
+  angry: "angry",
+});
+
+export class Area {
   constructor(normalCount1, normalCount2, angryCount) {
     this.normalCount1 = normalCount1;
     this.normalCount2 = normalCount2;
