@@ -135,3 +135,34 @@ body {
   transform: scale(1.1);
   cursor: pointer;
 }
+
+/* desktop */
+/* @media screen and (min-width:1024px) {
+    
+} */
+/* tablet */
+@media screen and (min-width:767px) and (max-width:1024px) {
+/* Global */
+:root {
+  /* font */
+  font-size: 12px;
+}
+.normal1,
+.normal2,
+.angry {
+  width: 50px;
+}
+}
+/* mobile */
+@media screen and (max-width:767px) {
+  /* Global */
+:root {
+  /* font */
+  font-size: 10px;
+}
+.normal1,
+.normal2,
+.angry {
+  width: 40px;
+}
+}
