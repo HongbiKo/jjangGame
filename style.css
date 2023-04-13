@@ -16,6 +16,11 @@ body {
   box-sizing: border-box;
   margin: 0;
 }
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /* Global */
 :root {
@@ -62,9 +67,6 @@ body {
   color: var(--sky-color);
   box-shadow: var(--box-shadow);
   transition: transform 100ms ease-in;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .game__btn:hover {
   transform: scale(1.1);

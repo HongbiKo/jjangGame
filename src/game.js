@@ -107,6 +107,7 @@ class Game {
     this.startTimer();
     this.switchStopBtn();
     this.showTimerAndScore();
+    this.showGameBtn();
     sound.playBg();
     this.hideIntroPopup();
   }
